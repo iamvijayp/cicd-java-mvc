@@ -32,8 +32,8 @@ jobs:
     # #   run: docker tag helloworld:latest 903389493868.dkr.ecr.us-east-1.amazonaws.com/helloworld:latest
     - name: Build and tag Docker image
       run: |
-          docker build -t ${{ env.ECR_REGISTRY_URLL }}/helloworld:${{ github.sha }} .
-          docker tag ${{ env.ECR_REGISTRY_URLL }}/myapp:${{ github.sha }} ${{ env.ECR_REGISTRY_URLL }}/helloworld:latest
+          docker build -t ${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }} .
+          docker tag ${{ env.ECR_REGISTRY_URL }}/myapp:${{ github.sha }} ${{ env.ECR_REGISTRY_URL }}/helloworld:latest
     - name: Configure AWS credentials
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}

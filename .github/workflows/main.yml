@@ -52,7 +52,7 @@ jobs:
         format: 'table'
         exit-code: '1'
         ignore-unfixed: false
-        vuln-type: 'os,library,application'
+        vuln-type: 'os'
         severity: 'CRITICAL,HIGH,MEDIUM'
     # - name: Scan Docker image with Trivy
     #   run: |

@@ -40,4 +40,4 @@ jobs:
       run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URL }}
 
     - name: Push Docker image to ECR
-      run: docker push ${{ env.ECR_REGISTRY_URL }}/helloworld-app
+      run: docker push ${{ env.ECR_REGISTRY_URL }}/helloworld

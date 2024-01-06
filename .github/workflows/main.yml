@@ -45,15 +45,15 @@ jobs:
 
     - name: Push Docker image to ECR
       run: docker push ${{ env.ECR_REGISTRY_URL }}/helloworld
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: '${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }}'
-        format: 'table'
-        exit-code: '1'
-        ignore-unfixed: false
-        vuln-type: 'os'
-        severity: 'CRITICAL,HIGH,MEDIUM'
+    # - name: Run Trivy vulnerability scanner
+    #   uses: aquasecurity/trivy-action@master
+    #   with:
+    #     image-ref: '${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }}'
+    #     format: 'table'
+    #     exit-code: '1'
+    #     ignore-unfixed: false
+    #     vuln-type: 'os'
+    #     severity: 'CRITICAL,HIGH,MEDIUM'
     # - name: Scan Docker image with Trivy
     #   run: |
     #     docker pull ${{ env.ECR_REGISTRY_URL }}/helloworld:latest

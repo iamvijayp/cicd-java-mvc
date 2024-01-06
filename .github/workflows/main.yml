@@ -27,8 +27,9 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build Docker image
-      run: docker build -t ${{ env.ECR_REGISTRY_URL }}/helloworld-app .
-
+      run: docker build -t ${{ env.ECR_REGISTRY_URL }}/helloworld:latest .
+    #   run: docker build -t helloworld .
+    #   run: docker tag helloworld:latest 903389493868.dkr.ecr.us-east-1.amazonaws.com/helloworld:latest
     - name: Configure AWS credentials
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}

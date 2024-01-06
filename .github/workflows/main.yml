@@ -41,3 +41,7 @@ jobs:
 
     - name: Push Docker image to ECR
       run: docker push ${{ env.ECR_REGISTRY_URL }}/helloworld
+    - name: Scan Docker image with Trivy
+      run: |
+        docker pull ${{ env.ECR_REGISTRY_URL }}/helloworld:latest
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy ${{ env.ECR_REGISTRY_URL }}/helloworld:latest

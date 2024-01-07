@@ -26,14 +26,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    # - name: Build Docker image
-    #   run: docker build -t ${{ env.ECR_REGISTRY_URL }}/helloworld:latest .
-    # #   run: docker build -t helloworld .
-    # #   run: docker tag helloworld:latest 903389493868.dkr.ecr.us-east-1.amazonaws.com/helloworld:latest
     - name: Build and tag Docker image
       run: |
-          docker build -t ${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }} .
-          docker tag ${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }} ${{ env.ECR_REGISTRY_URL }}/helloworld:latest
+          docker build -t ${{ env.ECR_REGISTRY_URL }}/hiworld:${{ github.sha }} .
+          docker tag ${{ env.ECR_REGISTRY_URL }}/hiworld:${{ github.sha }} ${{ env.ECR_REGISTRY_URL }}/hiworld:latest
     - name: Configure AWS credentials
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -44,21 +40,5 @@ jobs:
       run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URL }}
 
     - name: Push Docker image to ECR
-      run: docker push ${{ env.ECR_REGISTRY_URL }}/helloworld
-    # - name: Run Trivy vulnerability scanner
-    #   uses: aquasecurity/trivy-action@master
-    #   with:
-    #     image-ref: '${{ env.ECR_REGISTRY_URL }}/helloworld:${{ github.sha }}'
-    #     format: 'table'
-    #     exit-code: '1'
-    #     ignore-unfixed: false
-    #     vuln-type: 'os'
-    #     severity: 'CRITICAL,HIGH,MEDIUM'
-    # - name: Scan Docker image with Trivy
-    #   run: |
-    #     docker pull ${{ env.ECR_REGISTRY_URL }}/helloworld:latest
-    #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-    #       -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-    #       -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-    #       aquasec/trivy ${{ env.ECR_REGISTRY_URL }}/helloworld:latest
+      run: docker push ${{ env.ECR_REGISTRY_URL }}/hiworld
     

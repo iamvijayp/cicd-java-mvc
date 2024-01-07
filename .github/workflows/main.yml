@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ECR_REGISTRY_URL: '903389493868.dkr.ecr.us-east-1.amazonaws.com'
-      AWS_REGION: 'us-east-1'
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v2
@@ -28,17 +28,11 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-          docker build -t ${{ env.ECR_REGISTRY_URL }}/hiworld:${{ github.sha }} .
-          docker tag ${{ env.ECR_REGISTRY_URL }}/hiworld:${{ github.sha }} ${{ env.ECR_REGISTRY_URL }}/hiworld:latest
-    - name: Configure AWS credentials
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region ${{ env.AWS_REGION }}
+        docker build -t iamvijayp/hiworld:${{ github.sha }} .
+        docker tag iamvijayp/hiworld:${{ github.sha }} iamvijayp/hiworld:latest
 
-    - name: Login to Amazon ECR
-      run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URL }}
+    - name: Log into Docker Hub
+      run: docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ env.DOCKERHUB_PASSWORD }}
 
-    - name: Push Docker image to ECR
-      run: docker push ${{ env.ECR_REGISTRY_URL }}/hiworld
-    
+    - name: Push Docker image to Docker Hub
+      run: docker push iamvijayp/hiworld

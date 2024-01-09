@@ -28,11 +28,11 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        docker build -t iamvijayp/hiworld:${{ github.sha }} .
-        docker tag iamvijayp/hiworld:${{ github.sha }} iamvijayp/hiworld:latest
+        docker build -t iamvijayp/hiworld-v2:${{ github.sha }} .
+        docker tag iamvijayp/hiworld-v2:${{ github.sha }} iamvijayp/hiworld-v2:latest
 
     - name: Log into Docker Hub
       run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Push Docker image to Docker Hub
-      run: docker push iamvijayp/hiworld
+      run: docker push iamvijayp/hiworld-v2

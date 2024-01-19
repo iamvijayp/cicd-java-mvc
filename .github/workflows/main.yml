@@ -27,7 +27,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Inject license_key in newrelic.yml
-      run: sed -i 's/<REPLACE_WITH_NEWRELIC_LICENSE_KEY>/${{ secrets.NEW_RELIC_LICENSE_KEY }}/' newrelic/newrelic.yml
+      run: sed -i 's/<REPLACE_WITH_NEWRELIC_LICENSE_KEY>/${{ secrets.NEW_RELIC_LICENSE_KEY }}/' newrelic/newrelic*.yml
 
     # - name: Initialize CodeQL
     #   uses: github/codeql-action/init@v2

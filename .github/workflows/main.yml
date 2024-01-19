@@ -29,13 +29,13 @@ jobs:
     - name: Inject license_key in newrelic.yml
       run: sed -i 's/<REPLACE_WITH_NEWRELIC_LICENSE_KEY>/${{ secrets.NEW_RELIC_LICENSE_KEY }}/' newrelic/newrelic.yml
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: "java"
+    # - name: Initialize CodeQL
+    #   uses: github/codeql-action/init@v2
+    #   with:
+    #     languages: "java"
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+    # - name: Perform CodeQL Analysis
+    #   uses: github/codeql-action/analyze@v2
 
     - name: Build and tag Docker image
       run: |

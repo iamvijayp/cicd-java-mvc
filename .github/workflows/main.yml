@@ -50,7 +50,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: echo "test stage"
+        run: |
+          echo "test stage"
+          exit 1
   deploy:
       runs-on: ubuntu-latest
       steps:

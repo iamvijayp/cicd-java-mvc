@@ -33,7 +33,7 @@ jobs:
         docker build -t iamvijayp/hiworld-v2:${{ github.sha }} .
         docker tag iamvijayp/hiworld-v2:${{ github.sha }} iamvijayp/hiworld-v2:latest
     - name: Log into Docker Hub
-      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
+      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_USERNAME }}
 
     - name: Push Docker image to Docker Hub
       run: docker push iamvijayp/hiworld-v2
@@ -42,16 +42,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: Log into Docker Hub
-      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'iamvijayp/hiworld-v2:${{ github.sha }}'
-        format: 'table'
-        exit-code: '0'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_USERNAME }}
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'iamvijayp/hiworld-v2:${{ github.sha }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
   test:
     runs-on: ubuntu-latest
     steps:

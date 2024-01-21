@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  checkout:
+  build:
     runs-on: ubuntu-latest
 
     env:
@@ -32,6 +32,16 @@ jobs:
       run: |
         docker build -t iamvijayp/hiworld-v2:${{ github.sha }} .
         docker tag iamvijayp/hiworld-v2:${{ github.sha }} iamvijayp/hiworld-v2:latest
+    - name: Log into Docker Hub
+      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Push Docker image to Docker Hub
+      run: docker push iamvijayp/hiworld-v2
+  
+  scan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
@@ -40,19 +50,15 @@ jobs:
         exit-code: '0'
         ignore-unfixed: true
         vuln-type: 'os,library'
-
-    - name: Log into Docker Hub
-      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
-
-    - name: Push Docker image to Docker Hub
-      run: docker push iamvijayp/hiworld-v2
   test:
     runs-on: ubuntu-latest
     steps:
       - name: echo
         run: |
           echo "test stage"
-          exit 1
+          cat /etc/os-release
+          grep pro /proc/cpuinfo
+          uptime && who
   deploy:
       runs-on: ubuntu-latest
       steps:

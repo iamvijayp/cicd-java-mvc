@@ -20,7 +20,7 @@ jobs:
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
-        java-version: '21'
+        java-version: '17'
     # For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #

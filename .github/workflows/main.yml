@@ -50,7 +50,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'iamvijayp/hiworld-v2:${{ github.sha }}'
+          image-ref: 'iamvijayp/hiworld-v2:latest'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true

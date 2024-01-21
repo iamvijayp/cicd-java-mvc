@@ -10,9 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    # env:
+    #   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+    #   DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     steps:
     - uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
         docker build -t iamvijayp/hiworld-v2:${{ github.sha }} .
         docker tag iamvijayp/hiworld-v2:${{ github.sha }} iamvijayp/hiworld-v2:latest
     - name: Log into Docker Hub
-      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
+      run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Push Docker image to Docker Hub
       run: docker push iamvijayp/hiworld-v2

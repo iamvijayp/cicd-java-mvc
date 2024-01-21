@@ -42,6 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - name: Log into Docker Hub
+      run: docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:

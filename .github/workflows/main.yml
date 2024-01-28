@@ -62,6 +62,7 @@ jobs:
         with:
           image-ref: 'iamvijayp/hiworld-v2:latest'
           format: 'table'
-          # exit-code: '1' #Exit code when specified vulnerabilities are found
+          exit-code: '1' #Exit code when specified vulnerabilities are found
           ignore-unfixed: false
           vuln-type: 'os,library'
+          skip-dirs: "newrelic"

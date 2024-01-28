@@ -28,8 +28,7 @@ jobs:
       - name: Generate JaCoCo report
         run: mvn jacoco:report
       - name: Display coverage percentage
-        run: awk -F, ' { instructions += $4 + $5; covered += $5 } END { print 100*covered/instructions, "% covered" }' target/site/jacoco/jacoco.csv
-    
+        run: awk -F, ' { instructions += $4 + $5; covered += $5 } END { coverage=100*covered/instructions; print coverage, "% covered"; exit (coverage < 50) }' target/site/jacoco/jacoco.csv
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
